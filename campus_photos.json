@@ -1,0 +1,5 @@
+{
+  "_readme": "Only entries with verified=true, an https URL on an allowed host, a caption and an 'evidence' note are ever shown. campus must be \"1\" or \"2\". Never add an image just because of its filename or domain - record in 'evidence' where the official page/caption states which campus it shows. Run: python tools/verify_photos.py",
+  "allowed_hosts": ["pcte.edu.in"],
+  "photos": []
+}

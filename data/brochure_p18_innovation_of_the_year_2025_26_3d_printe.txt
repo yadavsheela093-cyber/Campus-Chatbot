@@ -1,0 +1,23 @@
+PCTE Ludhiana official brochure 2026 - Innovation of the year 2025-26 - 3D printer, COBOT
+INNOVATION OF THE YEAR 2025-2026
+PCTE Low-Cost FDM 3D Printer 2026
+Final-year Mechanical Engineering students — Pap S. Nyanamah, Eba Elogne Tanoh Pierre Habib, Eitesh
+Kumar, Joseph O. Carter, Karamoko Cheick Mohamed, Sahil Sharma, and Samantha Mahlanganise —
+designed a low-cost FDM 3D printer to support affordable prototyping and academic experimentation. Using
+Arduino Mega with RAMPS 1.4 and Marlin firmware, the open-source system allows full customization.
+Equipped with a heated bed, stepper motors, and a high-temperature extruder, the project highlights skills in
+mechanical design, electronics, and system integration.
+Collaborative Robot (COBOT)
+Training Program 2026
+The Department of Mechanical Engineering
+conducted an intensive 45-day in-house COBOT
+training program for final-year students, led by
+automation and robotics expert Er. Jagpal Singh.
+Students received hands-on training in COBOT
+programming, safety protocols, human–robot
+interac tion, path planning, pick-and-place
+operations, and sensor integration. The program also
+focused on Industry 4.0 applications, including
+assembly automation, inspection, packaging
+assistance, and workflow optimization.
+16

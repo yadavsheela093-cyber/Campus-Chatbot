@@ -1,0 +1,5 @@
+# OPTIONAL - semantic (meaning-based) search for RAG, used together with keyword search.
+# Needs ~1 GB RAM and downloads a small model on first run. If it fails to install,
+# just skip it: the app works fine with keyword search only.
+sentence-transformers
+faiss-cpu

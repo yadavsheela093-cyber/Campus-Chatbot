@@ -1,0 +1,383 @@
+{
+  "_READ_ME_FIRST": "Data in this file comes from the official PCTE brochure (March 2026) and facts confirmed by the student admin. After editing this file just restart the app - the database re-seeds itself automatically.",
+  "college_name": "Punjab College of Technical Education (PCTE), Ludhiana",
+  "college_short_name": "PCTE",
+  "logo_emoji": "🎓",
+  "tagline": "Ask me about admission, fees, hostel, library & more",
+  "primary_color": "#6C5CE7",
+  "secondary_color": "#00B894",
+  "footer_text": "Campus Assistant • Built for students",
+  "courses": [
+    {
+      "name": "B.Tech CSE (Computer Science Engineering)",
+      "duration": "4 Years, 210 seats, per semester",
+      "fee": 49900
+    },
+    {
+      "name": "B.Tech CSE (AI & ML)",
+      "duration": "4 Years, 90 seats, per semester",
+      "fee": 49900
+    },
+    {
+      "name": "B.Tech Mechanical Engineering",
+      "duration": "4 Years, 30 seats, per semester",
+      "fee": 49900
+    },
+    {
+      "name": "B.Tech Civil Engineering",
+      "duration": "4 Years, 30 seats, per semester",
+      "fee": 49900
+    },
+    {
+      "name": "BBA (Bachelor of Business Administration)",
+      "duration": "3 Years, 690 seats, per semester",
+      "fee": 30900
+    },
+    {
+      "name": "B.Com Honours",
+      "duration": "3 Years, 330 seats, per semester",
+      "fee": 31400
+    },
+    {
+      "name": "MBA (Marketing, Finance, HR etc.)",
+      "duration": "2 Years, 120 seats, per semester",
+      "fee": 49900
+    },
+    {
+      "name": "MBA International Business (MBA-IB)",
+      "duration": "2 Years, 60 seats, per semester",
+      "fee": 49900
+    },
+    {
+      "name": "BCA (Bachelor of Computer Applications)",
+      "duration": "3 Years, 480 seats, per semester",
+      "fee": 30900
+    },
+    {
+      "name": "B.Pharmacy",
+      "duration": "4 Years, 100 seats, per semester",
+      "fee": 49900
+    },
+    {
+      "name": "D.Pharmacy",
+      "duration": "2 Years, 60 seats, per semester",
+      "fee": 27400
+    },
+    {
+      "name": "BHMCT (Hotel Management & Catering Technology)",
+      "duration": "4 Years, 180 seats, per semester",
+      "fee": 49900
+    },
+    {
+      "name": "BTTM (Travel & Tourism Management)",
+      "duration": "4 Years, 60 seats, per semester",
+      "fee": 25400
+    },
+    {
+      "name": "B.Sc. Fashion Designing",
+      "duration": "3 Years, 60 seats, per semester",
+      "fee": 31400
+    },
+    {
+      "name": "B.A. Journalism & Mass Communication (BAJMC)",
+      "duration": "3 Years, 60 seats, per semester",
+      "fee": 30900
+    },
+    {
+      "name": "B.Sc. Medical Laboratory Sciences (MLS)",
+      "duration": "4 Years, 60 seats, per semester",
+      "fee": 31400
+    }
+  ],
+  "_courses_note": "Source: official PCTE brochure 2026 (Fee Structure page). Fees are per semester for Indian students. Additional charges (all courses except D.Pharmacy): Rs. 2000 one-time PTU counseling fee, Rs. 3000 exam fee per semester, Rs. 1600 URF per semester. MCA is not listed in the brochure so it was removed - re-add it if PCTE still runs it.",
+  "hostel": [
+    {
+      "type": "Girls' Hostel (near MBD Mall)",
+      "fee": 0,
+      "details": "Per month incl. 5% GST (w.e.f. 1 July 2026): Single Rs. 7,300 | Double Rs. 6,800 | Triple Rs. 6,200. Five minutes drive from college. Seats on first-come, first-served basis."
+    },
+    {
+      "type": "International Hostel",
+      "fee": 0,
+      "details": "Per month incl. 5% GST (w.e.f. 1 July 2026): Double Rs. 6,800 | Triple Rs. 6,200."
+    },
+    {
+      "type": "Boys' Hostel (Jhande Village, near Campus 2)",
+      "fee": 0,
+      "details": "Walking distance from Campus 2. Seats on first-come, first-served basis. Exact boys hostel charges are not listed in the 2026 brochure - contact the hostel office."
+    },
+    {
+      "type": "Guest House",
+      "fee": 0,
+      "details": "Per month incl. 5% GST: Single Rs. 7,900 | Double Rs. 7,400 | Triple Rs. 6,700. Visiting guests: Rs. 500/day incl. food. Room shifting: 1st time free, 2nd Rs. 500, 3rd Rs. 1000. GST is non-refundable if hostel is left mid-session."
+    }
+  ],
+  "library": [],
+  "_library_note": "Library timings are not published in the brochure. Add rows like {\"day\": \"Monday - Friday\", \"timing\": \"9 AM - 5 PM\"} when you know them.",
+  "contacts": [
+    {
+      "department": "PCTE Admissions / Main Office",
+      "person": "",
+      "phone": "+91-161-2888500",
+      "email": "admissions@pcte.edu.in"
+    },
+    {
+      "department": "Mobile (Admissions)",
+      "person": "",
+      "phone": "+91-98144 66955, +91-98720 90335, +91-98152 67755",
+      "email": ""
+    },
+    {
+      "department": "Campus 1 address",
+      "person": "",
+      "phone": "",
+      "email": "Baddowal, Ferozpur Road, Ludhiana-142021, Punjab"
+    },
+    {
+      "department": "Campus 2 address",
+      "person": "",
+      "phone": "",
+      "email": "Near Baddowal Cantt, Ferozepur Road, Ludhiana-142021, Punjab"
+    },
+    {
+      "department": "Official Website",
+      "person": "",
+      "phone": "",
+      "email": "www.pcte.edu.in"
+    },
+    {
+      "department": "Social media",
+      "person": "",
+      "phone": "",
+      "email": "instagram: pcteofficial | facebook.com/pctegroup | twitter.com/@pcteofficial | linkedin.com/school/pcte-ludhiana"
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Boys hostel fee rate charges Jhande",
+      "answer": "The boys hostel is in Jhande Village, at walking distance from Campus 2. I don't have its separate rate card; the published monthly rates (w.e.f. 1 July 2026, incl. 5% GST) are: Girls Hostel Single Rs. 7,300, Double Rs. 6,800, Triple Rs. 6,200; International Hostel Double Rs. 6,800, Triple Rs. 6,200; Guest House Single Rs. 7,900, Double Rs. 7,400, Triple Rs. 6,700. For the boys hostel rate please ask the admissions office: +91-161-2888500."
+    },
+    {
+      "question": "Who is the director head of Engineering Management Pharmacy Hotel Management block department HOD",
+      "answer": "I don't have the names of the block-wise directors or department heads. What I know: Dr. K.N.S. Kang is the Chairman and Director General of PCTE, and Ms. Harpreet K. Kang is the Dean of International Affairs. For other names please contact the college office: +91-161-2888500."
+    },
+    {
+      "question": "Library timing hours open close time",
+      "answer": "Library timings are not available with me right now. Please check with the college library or the admissions office: +91-161-2888500."
+    },
+    {
+      "question": "Is admission open start date last date how to apply admission process",
+      "answer": "For the latest admission status and dates, please contact the PCTE admissions office: +91-161-2888500 (mobiles: +91-98144 66955, 98720 90335, 98152 67755) or admissions@pcte.edu.in. You can also fill the online 'Apply Now' form on www.pcte.edu.in. Eligibility depends on the course: BBA, B.Com (Hons), BCA, BTTM, B.Sc Fashion Designing and BAJMC need 10+2 in any stream; BHMCT needs 10+2 (any stream) with minimum 50% (45% for other categories); B.Tech needs 10+2 with Physics and Mathematics (Civil and Mechanical: Physics, Chemistry and Mathematics); Pharmacy and Medical Lab Sciences need 10+2 science; MBA and MBA-IB admission is through GD/PI with minimum 50% marks (45% for other categories)."
+    },
+    {
+      "question": "PCTE was established in which year",
+      "answer": "PCTE (Punjab College of Technical Education), Ludhiana was established in 1999 and has completed 27+ years of educational excellence; it celebrated its 25th anniversary in 2024. It was founded by Wg. Cdr. HS Gill, Dr. K.N.S. Kang and Harpreet K. Kang."
+    },
+    {
+      "question": "How many campuses does PCTE have",
+      "answer": "PCTE has two campuses in Ludhiana. Campus 1: Baddowal, Ferozpur Road, Ludhiana-142021, Punjab. Campus 2: Near Baddowal Cantt, Ferozepur Road, Ludhiana-142021, Punjab. The boys hostel is in Jhande Village, at walking distance from Campus 2."
+    },
+    {
+      "question": "What events fests does PCTE have Koshish Ehsaas Turf",
+      "answer": "PCTE's three flagship events are Koshish, Ehsaas and Turf - usually held around October each year. Koshish is an intra-college cultural-literary fest, Ehsaas is a large inter-college cultural/literary/arts mega fest, and Turf is an inter-school event for management, literary, cultural and hospitality competitions."
+    },
+    {
+      "question": "Does PCTE have a sports day",
+      "answer": "Yes! PCTE holds an annual sports festival/sports day, usually around February-March, where faculty also join in alongside students. Sports include Cricket, Football, Basketball, Volleyball, Badminton, Tug of War, Shot Put, Table Tennis and Pool, plus an athletics track and gym for regular training."
+    },
+    {
+      "question": "What is the PCTE Instagram page",
+      "answer": "PCTE's official Instagram page is pcteofficial (instagram.com/pcteofficial). Facebook: facebook.com/pctegroup. Twitter/X: @pcteofficial. LinkedIn: linkedin.com/school/pcte-ludhiana."
+    },
+    {
+      "question": "Tell me the full history old and new achievements rankings of PCTE",
+      "answer": "PCTE was established in 1999, founded by Wg. Cdr. HS Gill, Dr. K.N.S. Kang and Harpreet K. Kang, and celebrated its 25th anniversary in 2024. Today it has 4,772 students on campus, 400+ international students (students and alumni from 65 countries), 30 international university collaborations and 303+ companies visiting every year. Highest package is 70 LPA. Recent rankings (2025-2026) include: Times B School Survey 2025 - 9th best BBA school among private B-schools in India; India Today MDRA 2025 - 4th best BBA, Hotel Management and 9th best BCA college in Punjab; Business Today MDRA 2025 - 3rd best private B-school in Punjab; Outlook-ICARE 2026 - 5th best private B-school in Punjab. Older awards include Best Management College 2015 and Best Hotel Management and Pharmacy College 2014 (PTU), plus B-school leadership awards in 2010-2013."
+    },
+    {
+      "question": "How are PCTE placements companies recruiters package highest average",
+      "answer": "From the official brochure: highest package 70 LPA (also 55 LPA - 10 students and 45 LPA - 23 students), average package 7 LPA, 303+ companies visit every year, 50+ companies in the Mega Job Fair, and international placements with Omni Hotels & Resorts USA and United Airlines USA. Recruiters include Amazon, Goldman Sachs, HDFC, ICICI, Axis, Marriott, Taj, Oberoi, Emirates, Qatar Airways, Cipla, Sun Pharma, Mankind, Nestle, HUL, ITC and more."
+    },
+    {
+      "question": "What are PCTE quick facts students on campus international students awards",
+      "answer": "PCTE quick facts: 4772 students on campus, 400+ international students from 65 countries, 303+ recruiting companies every year, 30 international university collaborations, 71 university gold medals and 57 silver medals, 100+ industrial visits and 125 educational trips each year, 130+ student run organizations."
+    },
+    {
+      "question": "Who is the chairman director general of PCTE founders",
+      "answer": "Dr. K.N.S. Kang is the Chairman and Director General of PCTE Group of Institutes, Ludhiana. PCTE was founded by Wg. Cdr. HS Gill, Dr. K.N.S. Kang and Harpreet K. Kang (Dean of International Affairs). PCTE is approved by AICTE and PCI and affiliated to IKG PTU Kapurthala."
+    },
+    {
+      "question": "Bus pass transport fare route PCTE",
+      "answer": "PCTE bus pass 2026 (both side / one side): Atam Park/Bus Stand Rs. 7,350/4,400; Samrala Chownk Rs. 11,350/6,850; Jagraon Rs. 11,550/6,950; Kohara Rs. 16,300/9,800; Jalandhar Bypass Rs. 13,350/8,000; Pavillion Mall Rs. 11,200/6,700; Girls Hostel Rs. 4,200/2,500. 20 fare routes in total - ask me about your area for its fare."
+    },
+    {
+      "question": "Eligibility seats for BCA BBA B.Tech BHMCT admission",
+      "answer": "Seats: B.Tech CSE 210, AI&ML 90, Mechanical 30, Civil 30; BBA 690; B.Com Hons 330; MBA 120; MBA-IB 60; BCA 480; B.Pharm 100; D.Pharm 60; BHMCT 180; BTTM 60; B.Sc FD 60; BAJMC 60; B.Sc MLS 60. Eligibility: BBA, B.Com, BCA, BTTM, FD, BAJMC - 10+2 any stream; BHMCT - 10+2 any stream with min 50% (45% for other categories); B.Tech Mechanical/Civil - 10+2 with PCM."
+    },
+    {
+      "question": "Additional charges exam fee counseling fee URF",
+      "answer": "Additional charges for all courses except D.Pharmacy: Rs. 2000 one-time P.T.U. counseling fee, Rs. 3000 examination fee per semester and Rs. 1600 URF per semester (subject to revision as per P.T.U. notification). Fees once submitted are not refunded."
+    },
+    {
+      "question": "PCTE rankings awards India Today Business Today Outlook Times survey 2025 2026",
+      "answer": "PCTE rankings (brochure): Times B School Survey 2025 - 9th best BBA school among private B-schools and 16th among all B-schools in India. India Today MDRA 2025 - in Punjab: 4th best BBA, 4th Hotel Management, 6th Fashion Designing, 9th BCA, 9th Commerce; in India: 59th BBA, 60th Hotel Management, 59th Fashion Designing. Business Today MDRA 2025 - 3rd best private B-school in Punjab, 29th best North B-school, 65th best private B-school in India (2nd in Punjab); 4th among private colleges and 10th overall for MBA Return on Investment. The Week Hansa 2025 - Punjab: 4th Hotel Management, 6th Commerce; India: 60th Hotel Management, 96th Commerce. Outlook-ICARE 2026 - 5th best private B-school in Punjab, 22nd in North India. Business Today 2023 also ranked PCTE 2nd best private B-school in the country for Value for Money, and 7th in India for MBA ROI in 2024."
+    },
+    {
+      "question": "PCTE old awards history Bloomberg UTV DNA Philip Kotler PTU best college award",
+      "answer": "Earlier PCTE awards: Best Management College 2015 and Best Hotel Management College 2014 and Best Pharmacy College 2014 (all by PTU); Times Now Education Evangelist of the Year 2014; B-School Excellence Award by ABP News 2013; Best B-Schools in the world at the World Marketing Summit (Philip Kotler initiative, Malaysia) 2013; B-school leadership award by ET Now 2013; Bloomberg/UTV Outstanding B-school (North) 2012; DNA and Stars of Industry Innovative Leadership awards 2010-2012; Asia Best B-School Leadership Award at Suntec Singapore 2010; Star News B-school Leadership Award 2011; Outstanding B-School (North India) Award by Amar Ujala; students also won 13 prizes at Tarang - IIT Roorkee."
+    },
+    {
+      "question": "PCTE Faculty of Engineering Technology B.Tech programs established infrastructure",
+      "answer": "The Faculty of Engineering and Technology was established in 2019 and offers four UG programs: B.Tech CSE, B.Tech CSE (AI & ML), B.Tech Civil and B.Tech Mechanical. All are AICTE approved and affiliated to I.K. Gujral Punjab Technical University. The institute is centrally air conditioned with smart classrooms and well-equipped laboratories."
+    },
+    {
+      "question": "B.Tech CSE computer science eligibility seats specialization Zscaler package",
+      "answer": "B.Tech CSE: 4 years, 210 seats. Eligibility: 10+2 with Physics and Mathematics compulsory, plus one of Chemistry / Computer Science / Electronics / IT / Biology / Informatics Practices / Biotechnology / Technical Vocational subject / Agriculture / Engineering Graphics / Business Studies / Entrepreneurship. Core specializations: Data science, Software design & development, Multimedia & Computer Vision, Information & Cyber Security. Highlights: Crewsphere & ICP web3 projects (tokenized asset management, blockchain identity verification, decentralised voting), 9 MoUs (Novem Controls, Solitaire Infosys, Cresphere ICP India), 100+ placement/internship partner companies, live projects and internships. A student was placed at Zscaler with Rs. 19.5 lakh package."
+    },
+    {
+      "question": "B.Tech AI ML artificial intelligence machine learning eligibility seats research",
+      "answer": "B.Tech CSE (AI & ML): 4 years, 90 seats, department established in 2024 at PCTE Institute of Engineering. Eligibility same as CSE (10+2 with Physics and Mathematics plus one more listed subject). Research areas: Deep Learning, Generative AI, ML optimization, Bayesian learning, Reinforcement Learning, Algorithms for massive datasets, Causal inference, Conversational AI, NLP. Aim: make students leaders in the AI industry and academia. Also has Crewsphere & ICP web3 exposure, 9 MoUs and Zscaler Rs. 19.5 lakh placement mention."
+    },
+    {
+      "question": "B.Tech Mechanical engineering eligibility seats labs specializations COBOT",
+      "answer": "B.Tech Mechanical Engineering: 4 years, 30 seats, eligibility 10+2 with Physics, Chemistry and Mathematics compulsory. Labs: Applied Thermodynamics, CAD/CAM, Automation, Robotics & Mechatronics, Fluid Mechanics, Heat Transfer, Manufacturing Technology, Metallurgy & Heat Treatment. Specializations: AutoCAD & Simulation, Mechatronics & Automation, Energy Engineering, Automobile Engineering, Manufacturing & Robotics. Student forum 'Yantriki'; industrial visits to SML Isuzu, RCF Kapurthala, International Tractors, Verka Milk Plant etc. In 2026 students built a low-cost FDM 3D printer and did a 45-day COBOT training."
+    },
+    {
+      "question": "B.Tech Civil engineering eligibility seats software internship dam visit",
+      "answer": "B.Tech Civil Engineering: 4 years, 30 seats, eligibility 10+2 with Physics, Chemistry and Mathematics compulsory. Specializations: Structural Engineering & Construction Management, Environmental Engineering, Transportation. Software: AUTOCAD, BIM, GEOSTADIA, STAAD PRO. Six-month internship, survey camps, student forum 'Constructors', industrial visits to Ambuja Cement, Punjab Irrigation Dept, National Fertilizers, Shahpur Kandi Dam and Bhakra Nangal Dam."
+    },
+    {
+      "question": "BHMCT hotel management eligibility seats world records industrial training",
+      "answer": "BHMCT (Hotel Management & Catering Technology): 4 years, 180 seats, AICTE approved. Eligibility: 10+2 any stream with minimum 50% marks (general) and 45% (other categories). The department is built like a mock hotel with front desk, banquet, hotel room, laundry, bakery and restaurants (Indian Angeethi, Cubs Cafe). 6-month international/domestic industrial training in 5th semester (Mauritius, Dubai, Malaysia, USA, Greece, France; Oberoi, Taj, Marriott). Records: 1241 varieties of parathas in 9 min 10 sec (Guinness/Limca), world's largest thali 96 inch with 270 dishes (2019), 114 coffee varieties (2022), 524 millet samosa variations (2024). 23 students got the highest package of Rs. 70 lakh in the USA."
+    },
+    {
+      "question": "BTTM travel tourism eligibility seats cabin crew passport placement United Airlines",
+      "answer": "BTTM (Travel & Tourism Management): 4 years, 60 seats, eligibility 10+2 any stream. Features: in-house airline lab and cabin crew training, every student processes at least 20 passports per semester, training in travel agencies (tour packages, visas, air ticketing, IRCTC), AIESEC association, Globetrotter quiz. Placements: United Airlines, Singapore Airlines, Air Asia, Indigo, MakeMyTrip, Thomas Cook, tourism boards of Bhutan, Lesotho, Punjab and J&K. One student secured Rs. 50 lakh as Cabin Crew at United Airlines."
+    },
+    {
+      "question": "Faculty business management commerce placements highest package Federal Bank average",
+      "answer": "Faculty of Business Management and Commerce was founded in 1999 and offers BBA, B.Com, MBA and MBA (International Business). It reports 100% placement; highest package Rs. 17 lakh per annum with Federal Bank; average package about Rs. 2.5 lakh for UG and Rs. 4.5 lakh for PG students. In Business Today MDRA 2024 it ranked 7th in India for ROI. Startups such as Nappads Solutions, Mad-Chef, Pattravali and Valazhai-IIay were recognised nationally."
+    },
+    {
+      "question": "BBA eligibility seats specialization HRM marketing finance placements",
+      "answer": "BBA: 3 years, 690 seats, eligibility 10+2 any stream. Specializations: HRM / Marketing / Finance. Activities: Demat account and securities trading, Consumer Hub, RAWAR, guest lectures, entrepreneurship workshops, online certifications (Google Skill Shop, edX, Coursera), mandatory summer internship. Placements: Federal Bank, Tommy & CK, Jaro Education, Wipro, Lenskart, Asian Paints, Crescendo Global, UTI Mutual Fund, PhonePe and others."
+    },
+    {
+      "question": "B.Com Honours commerce eligibility seats Tally NISM placements",
+      "answer": "B.Com (Honours): 3 years, 330 seats, eligibility 10+2 any stream. Covers Accounting, Management and Business Statistics. Features: hands-on Tally training, NISM certifications, internships under CA/CMA/CS, workshops on financial planning and tax, practical work like PAN, ITR and GST filing. Placements: ITC, CEIGALL India, Just Dial, Jaro Education, Wipro, Lenskart, Asian Paints, Crescendo Global, UTI Mutual Funds, Sportking and more."
+    },
+    {
+      "question": "MBA admission criteria seats placement Goldman Sachs Federal Bank 14.5 LPA",
+      "answer": "MBA (Marketing, Finance & HR): 2 years, 120 seats. Admission: GD/PI plus minimum 50% marks (general) / 45% (other categories). Features: Grand Saturday industry immersion, Partnership Hub, business simulation games, case studies, NISM and digital marketing certifications, Money Multiplier program. Placements: Goldman Sachs, Federal Bank, Trident, Jaro Education, Tech Mahindra, TCS, ICICI Bank, Asian Paints, Crescendo Global, Axis Bank; packages up to 14.5 LPA at Federal Bank."
+    },
+    {
+      "question": "MBA International Business MBA-IB seats export club tie-ups placements",
+      "answer": "MBA-IB (International Business): 2 years, 60 seats, admission via GD/PI with minimum 50% marks (general) / 45% (other). Features: Barter Charter, Investment Hub (Demat account), Export Club (one real export consignment), live projects with DGFT, ECGC, ITPO, Indian Institute of Packaging, international logistics workshop, tie-ups with 24 international business schools. Placements: Goldman Sachs, Rex International, TRB Exports, Supple Tek, King Exports, Eastman, Ralson, Centex Export."
+    },
+    {
+      "question": "BCA computer applications eligibility seats placements Infosys Wipro Solitaire",
+      "answer": "BCA: 3 years, 480 seats, eligibility 10+2 any stream. The Faculty of Computer Applications has a dedicated research lab and covers web/software development, machine learning, Python, IoT and Android. Features: online certifications (Coursera, Udemy, edX, NPTEL, Google, Microsoft), Athena IT fest, in-house IT Cell with live corporate projects, expert workshops. Placements: Solitaire, Infosys, Wipro, Omni Technologies, Sensation, Code Young, Planet Spark, Pisoft."
+    },
+    {
+      "question": "B.Pharmacy B Pharm eligibility seats PCI placements Sun Pharma",
+      "answer": "B.Pharmacy: 4 years, 100 seats, approved by PCI and affiliated to IKGPTU. Admission: minimum 50% marks (general) / 45% (other categories). Eligibility: 10+2 science with Physics, Chemistry and Biology or Mathematics. Features: Herbal Hub, MoUs with Velite Pharmaceuticals, Global Heart Hospital and others, medical camps, research papers. Placements: Sun Pharma (Rs. 4.8 lakh), Life Cell (Rs. 4.2 lakh), Cipla, Abbott, Fortis, DMC, SPS Hospital. Faculty of Pharmaceutical Sciences was established in 2007."
+    },
+    {
+      "question": "D.Pharmacy D Pharm diploma eligibility seats age requirement",
+      "answer": "D.Pharmacy: 2 years, 60 seats, a diploma affiliated to Punjab State Board of Technical Education & Industrial Training, Chandigarh and approved by PCI. Eligibility: 10+2 science with Physics, Chemistry and Biology or Mathematics. The student must complete 17 years of age on or before 31 December of the admission year. Placements: GSK, Sun Pharma, Cipla, Abbott, Fortis, DMC, SPS Hospital."
+    },
+    {
+      "question": "B.Sc Medical Laboratory Sciences MLS eligibility seats lateral entry placements",
+      "answer": "B.Sc. MLS: 4 years, 60 seats. Eligibility: 10+2 with Physics & Chemistry compulsory and either Mathematics or Biology; lateral entry allowed for DMLT or Diploma in Pharmacy as per IKGPTU norms. Features: free medical camps with Global Heart, Aastha Kidney, Fortis; weekly practical training at labs/hospitals (Raghunath, Star Lab, Red Cross Blood Bank, Mediways, Deepak Hospital); blood donation camps. Placements: SRL Diagnostics, DMCH, ADK Hospital Maldives, Raghunath, Deepak Hospital and others."
+    },
+    {
+      "question": "B.Sc Fashion Designing eligibility seats THE HANGER studio placements",
+      "answer": "B.Sc. Fashion Designing: 3 years, 60 seats, eligibility 10+2 any stream. Learn sketching, CorelDraw, Photoshop, Illustrator, draping, pattern making, weaving, knitting, textiles, dyeing, sustainable fashion. Activities: annual exhibition-cum-sale, fashion shows, designer studio 'THE HANGER', fashion conclave, The Runway India, educational trips. Placements: Duke, Tommy Hilfiger, Vardhman, Sportking, Monte Carlo, Vero Moda and more."
+    },
+    {
+      "question": "BAJMC journalism mass communication eligibility seats studio radio placements",
+      "answer": "B.A. Journalism & Mass Communication (BAJMC): 3 years, 60 seats, eligibility 10+2 any stream. Features: soundproof studio, college radio (Radio PCTE Ludhiana), TV and YouTube channels, DSLR, drones and gimbals training, print/broadcast/online media work, internships. Placements: News18, Zee Group, India News, Times of India, Hindustan Times, The Tribune, Daily Post, Dainik Bhaskar, Jagran, PITAARA TV, Chaupal."
+    },
+    {
+      "question": "PCTE placement top recruiters companies sector list hospitality IT pharma banking",
+      "answer": "Recruiters by sector (brochure): Hospitality - JW Marriott, Omni Hotels, Taj, Oberoi, Hyatt, Hilton, Four Seasons, Shangri-La, Burj Al Arab, Vistara. Travel - United Airlines, Emirates, Qatar Airways, Thomas Cook, MMT, Indigo, Air Asia. Financial - Goldman Sachs, HDFC, ICICI, Axis, Kotak, Federal Bank, Zerodha, Motilal Oswal. IT - Amazon, Cognizant, TCS, Tech Mahindra, Wipro, Infosys, Accenture, HCL, IBM, Nagarro. FMCG - ITC, HUL, Nestle, Britannia, Mondelez. Pharma - GSK, Sun Pharma, Cipla, Abbott, Mankind. Also retail, textile, e-commerce, insurance, telecom and real estate companies. 303+ companies visit every year."
+    },
+    {
+      "question": "Koshish fest teams events artists singers PCTE",
+      "answer": "Koshish is PCTE's annual celebration of arts, culture and community with about 70 teams competing in events like fashion show, solo/group dance and song, nukkad natak, quiz, extempore, JAM, debate, photography, business plan and more. The final day features live performances by artists such as Indian Ocean, Euphoria, Jaspinder Narula, Nooran Sisters, Jasbir Jassi, Satinder Sartaj, Harbhajan Mann and Gurnam Bhullar."
+    },
+    {
+      "question": "Ehsaas fest cash prizes colleges Punjab PCTE",
+      "answer": "Ehsaas is PCTE's inter-college cultural mega fest running since 1999, with cash prizes totalling Rs. 21,12,500 and an Overall Trophy. 35-40 teams from top colleges across Punjab compete in JAM, face painting, dumb charades, group dance, solo song/dance, PICTO, quiz, extempore and AI Brand Quest."
+    },
+    {
+      "question": "Turf fest inter school PCTE schools prizes",
+      "answer": "Turf is PCTE's flagship inter-school cultural and literary competition with close to 45 schools from Ludhiana and nearby cities and cash prizes exceeding Rs. 2,50,000. Events include Oven Love (bakery), The Banner Bill (poster making), Let's Dance, AI Brand Quest, quiz, JAM, fashion show, dumb charades, Sur Mantra (solo song) and group discussion."
+    },
+    {
+      "question": "PCTE Mr Miss Punjab pageant prize money rounds",
+      "answer": "PCTE Mr. & Miss Punjab is a beauty pageant with about 250 aspirants and cash prizes worth Rs. 2,50,000. Winners get Rs. 75,000 each, 1st runners-up Rs. 25,000 each and 2nd runners-up Rs. 10,000 each, plus titles like Mr & Miss Fitness, Personality, Top Model and Influencer. Rounds: Preliminary (theme Pastels), Semi-Final (Ethnic) and Final (evening gowns and tuxedos). Sponsored by Jojo International and AU Small Finance Bank."
+    },
+    {
+      "question": "British Parliamentary Debate TEDx PCTE Dr D R Singh Memorial",
+      "answer": "The Dr. D. R. Singh Memorial British Parliamentary Debate was pioneered in India by PCTE in 2008, organised with the Ludhiana Management Association; 50 best teams from IIMs, IITs, NITs and others compete for cash prizes worth Rs. 1,50,000 in a 30+ hour tournament. TEDx PCTE hosts speakers on innovation and ideas, e.g. Prashant Narang, Geetika Saigal, Flt. Lt. Renu Lamba and Col. Neeraj Bakhshi (Retd.)."
+    },
+    {
+      "question": "PCTE clubs list sports athletic meet All-Star League tournaments",
+      "answer": "PCTE has 30+ student clubs including Dance, Creative, Music, Literary, Theatre, Cooking & Baking, Investment, Exports, CSR, E-Cell, Visual Arts, Adventure, Techno, Chess, Travel, Pool, Badminton, Basketball, Volleyball, Soccer, Table Tennis and Cricket. The Annual Athletic Meet (March past, track and field events, cross-country race) and the All-Star League tournaments (teams like Falcon Fires, Thunder Wolves, Golden Warriors, XCEL Hoopers) cover sports such as badminton, table tennis, soccer, volleyball, cricket, basketball, tug of war, bench press and shot put."
+    },
+    {
+      "question": "PCTE expeditions exchange program international trips domestic trips countries",
+      "answer": "Student & faculty exchange programs: South Korea, France, Lithuania, Romania, Mexico, Denmark, Egypt, Brazil, Kenya, Poland, Russia, Greece, Germany, Georgia, Sri Lanka. International trips: USA, UK, Europe, Russia, Dubai, Abu Dhabi, Malaysia, Singapore, Thailand. Domestic trips: Goa, Darjeeling, Rajasthan, Rishikesh, Nainital, Kasauli, Manali, McLeodGanj & Triund, Shimla, Kerala."
+    },
+    {
+      "question": "PCTE ambassadors lecture series Your Excellency visited campus",
+      "answer": "Under the Your Excellency Lecture Series, 54 ambassadors and senior officials of various countries have visited the PCTE campus, including representatives of Djibouti, Sudan, Chad, Seychelles, Sri Lanka, Tajikistan, Mongolia, Colombia, Bosnia and Herzegovina, South Sudan, Gabon, Malawi, Ethiopia, Tunisia, Canada, Serbia, Israel, Poland, Bhutan, South Africa, Ukraine, Mexico and many more."
+    },
+    {
+      "question": "PCTE E-Cell Hatch Lab Incubator startups hackathon Credmate funding",
+      "answer": "PCTE E-Cell Hatch Lab Incubator promotes entrepreneurship ('creating employers, not employees'); it is accredited by Punjab's Startup Cell and partners with TBIF IIT Ropar, PUM Netherlands, PABI, CICU and PHD Chamber. Highlights: Credmate got Rs. 1 crore funding on a business reality show; 5 startups recognised by DPIIT; team DhanRakshak was First Runner-Up at SAFE Hackathon 2025 (Rs. 3,00,000 prize); team Code Leaders won Zinnovatio 3.0 (Rs. 50,000); Garv Saluja (Campus Bites) honoured as Youth Icon; International Entrepreneurship Bootcamp with PUM Netherlands expert Mick Walvisch (26 Jan - 9 Feb 2026)."
+    },
+    {
+      "question": "PCTE IQAC research development cell NSS student welfare counselling grievance",
+      "answer": "IQAC was established at PCTE on 10 July 2021 to ensure continuous quality improvement. The R&D Cell promotes research, conferences, paper publishing and funding access. NSS (est. 1969 nationally) volunteers do tree plantation, health camps and awareness drives. The Student Support & Welfare Cell offers an open door policy, grievance redressal, confidential one-on-one counselling and cultural and social engagement activities."
+    },
+    {
+      "question": "PCTE innovation 3D printer drone Indian Army project COBOT 2026",
+      "answer": "Innovation of the year 2025-26: final-year Mechanical students built a low-cost FDM 3D printer (Arduino Mega, RAMPS 1.4, Marlin firmware); a 45-day COBOT training was held; students completed two defence projects with the Indian Army (electronic circuit design and infrastructure mapping software) and are working on a third (inventory management software); Mechanical, CSE and BCA students built a quadcopter drone."
+    },
+    {
+      "question": "PCTE international students countries week culture global week convocation reunion",
+      "answer": "PCTE has 400+ international students from 65 countries (students and alumni). International Students' Week includes sports leagues, fashion shows, music and dance and a Culinary Fest. Global Week 2025 brought researchers, educators and students together. The Annual Convocation features a parade of national flags; Nostalgia 2025 was the alumni reunion. PCTE/ICMR hosted its 13th International Multidisciplinary Conference in 2025."
+    },
+    {
+      "question": "PCTE Vyapaar Vipanan Athena hackathon corporate activities RAWAR consumer hub grand thursday",
+      "answer": "Vyapaar 3.0 is the annual business fest (Corporate Roadies, Business Quiz, Marketing Mayhem, Financial Crunchers); Vipanan 2.0 is its marketing event; Athena & Hackathon is the annual inter-college IT fest (Hackathon, web designing, LAN gaming, blind coding, bridge making). Corporate activities: RAWAR (semester-long market research), Consumer Hub (students sell services on campus) and Grand Thursday/Friday/Saturday (students work in industry once a week)."
+    },
+    {
+      "question": "How many students and international students does PCTE have",
+      "answer": "PCTE has 4,772 students on campus, including 400+ international students. Students and alumni come from 65 countries, and the college has 30 international university collaborations."
+    },
+    {
+      "question": "MCA course available in PCTE",
+      "answer": "MCA is not listed in PCTE's current (2026) programme list or fee table, so I can't confirm it is available. Please check with the admissions office: +91-161-2888500 or admissions@pcte.edu.in."
+    }
+  ],
+  "suggested_questions": [
+    "BCA ki fee kitni hai?",
+    "Hostel fee kitni hai?",
+    "Placements aur highest package?",
+    "Koshish / Ehsaas kya hai?",
+    "PCTE rankings batao",
+    "Bus pass fare batao"
+  ],
+  "official_site": "https://pcte.edu.in",
+  "crawl_refresh_hours": 24,
+  "_official_site_note": "The chatbot's MAIN source of truth. On startup it reads this website in the background (pages + linked PDFs) and answers from it; it re-reads automatically every crawl_refresh_hours.",
+  "live_pages": [
+    "https://www.pcte.edu.in/about-us/",
+    "https://admissions.pcte.edu.in/"
+  ],
+  "_live_pages_note": "⚠️ These pages are live-fetched fresh (see chatbot/live_fetch.py) whenever a student asks about 'latest/naya/update/notice/news'. PCTE's MAIN homepage (pcte.edu.in) has a 'Latest News & Announcements' section, but it's loaded by JavaScript, so simple fetching CANNOT read it (you'd need a headless browser like Selenium for that, which is heavier to set up). The URLs above are pages confirmed to return real readable text with simple fetching. Add more confirmed-working PCTE page URLs here as you find them. For truly live homepage news, the chatbot's Gemini Google Search Grounding (ai.py) already helps too, since Google's search index can see JS-rendered content that direct fetching cannot.",
+  "fee_period": "per semester",
+  "reply_language": "English"
+}
