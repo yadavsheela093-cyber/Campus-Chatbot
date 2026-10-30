@@ -222,8 +222,11 @@ def answer_events(message, history=None, engine=None):
 
     # 4) Gemini, streamed
     raw, model, error = "", None, None
+    t_ctx, first_ms = ms(), None
     for kind, payload in ai.stream_answer(message, context, history_text):
         if kind == "delta":
+            if first_ms is None:
+                first_ms = ms()
             raw += payload
             yield {"type": "delta", "text": payload}
         elif kind == "done":
@@ -236,6 +239,7 @@ def answer_events(message, history=None, engine=None):
         if standalone:
             cache_put(key, text, sources)
         _log(message, text)
+        print(f"[speed] search {t_ctx}ms | first word {first_ms}ms | total {ms()}ms | {model}")
         yield {"type": "final", "text": text, "mode": "ai", "model": model, "ms": ms(), "sources": sources}
         return
 
