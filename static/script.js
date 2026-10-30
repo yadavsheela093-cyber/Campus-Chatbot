@@ -99,9 +99,10 @@
 
   // ------------------------------------------------------------ photos (campus galleries)
   function httpsUrl(u) { try { return new URL(u).protocol === "https:"; } catch (e) { return false; } }
+  function photoUrl(u) { return typeof u === "string" && (/^\/static\/campus_photos\/[\w.\-]+\/[\w.\- ()%]+$/.test(u) || httpsUrl(u)); }
   function safePhotos(list) {
     return (Array.isArray(list) ? list : [])
-      .filter((p) => p && httpsUrl(p.url) && httpsUrl(p.source_page) && typeof p.caption === "string")
+      .filter((p) => p && photoUrl(p.url) && httpsUrl(p.source_page) && typeof p.caption === "string")
       .map((p) => ({ url: p.url, caption: p.caption.slice(0, 200), source_page: p.source_page, campus: String(p.campus || "") }));
   }
   function safeLinks(list) {
