@@ -252,4 +252,6 @@ def health():
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(debug=True, host="0.0.0.0", port=port)
+    # debug + auto-reloader start the whole app TWICE (2 crawls, 2 AI checks, 2 index builds) = slow.
+    # Turn debug on only when you need it: set FLASK_DEBUG=1 in .env
+    app.run(debug=os.environ.get("FLASK_DEBUG") == "1", use_reloader=False, host="0.0.0.0", port=port)
