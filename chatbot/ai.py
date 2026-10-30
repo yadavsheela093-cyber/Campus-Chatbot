@@ -16,7 +16,9 @@ SPEED + RELIABILITY design (why answers are now fast):
 import os
 import re
 import time
+import json
 import queue
+import requests
 import threading
 
 from chatbot.database import load_config
@@ -92,6 +94,70 @@ def build_user_prompt(question, context_text, history_text=""):
 
 
 # --------------------------------------------------------------------- client
+API_BASE = os.environ.get("GEMINI_API_BASE", "https://generativelanguage.googleapis.com/v1beta/models")
+HTTP_TIMEOUT = (5, 15)      # (connect, read) seconds
+
+
+class _Resp:
+    def __init__(self, text):
+        self.text = text
+
+
+def _extract_text(data):
+    """Pulls the answer text out of one Gemini JSON reply (ignores 'thought' parts)."""
+    try:
+        parts = data["candidates"][0]["content"]["parts"]
+    except (KeyError, IndexError, TypeError):
+        return ""
+    return "".join(p.get("text", "") for p in parts if isinstance(p, dict) and not p.get("thought"))
+
+
+class _RestModels:
+    """Talks to Gemini with plain HTTPS (requests). Much lighter and faster to start than the
+    google-genai library, which was hanging on the small free Render server."""
+
+    def __init__(self, key):
+        self.key = key
+
+    def _call(self, model, contents, system, max_tokens, thinking_off, stream):
+        body = {"contents": [{"role": "user", "parts": [{"text": contents}]}],
+                "generationConfig": {"temperature": 0.2, "maxOutputTokens": max_tokens}}
+        if system:
+            body["systemInstruction"] = {"parts": [{"text": system}]}
+        if thinking_off:
+            body["generationConfig"]["thinkingConfig"] = {"thinkingBudget": 0}
+        url = f"{API_BASE}/{model}:" + ("streamGenerateContent?alt=sse" if stream else "generateContent")
+        r = requests.post(url, headers={"x-goog-api-key": self.key, "Content-Type": "application/json"},
+                          json=body, timeout=HTTP_TIMEOUT, stream=stream)
+        if r.status_code != 200:
+            raise RuntimeError(f"{r.status_code} {r.text[:300]}")
+        return r
+
+    def generate_content(self, model, contents, system=None, max_tokens=50, thinking_off=False):
+        return _Resp(_extract_text(self._call(model, contents, system, max_tokens, thinking_off, False).json()))
+
+    def generate_content_stream(self, model, contents, system=None, max_tokens=600, thinking_off=False):
+        r = self._call(model, contents, system, max_tokens, thinking_off, True)
+        r.encoding = "utf-8"
+        try:
+            for line in r.iter_lines(decode_unicode=True):
+                if not line or not line.startswith("data:"):
+                    continue
+                try:
+                    text = _extract_text(json.loads(line[5:].strip()))
+                except ValueError:
+                    continue
+                if text:
+                    yield text
+        finally:
+            r.close()
+
+
+class _RestClient:
+    def __init__(self, key):
+        self.models = _RestModels(key)
+
+
 def get_client():
     """Creates the Gemini client once (thread-safe). Returns None if unusable."""
     with _client_lock:
@@ -103,17 +169,7 @@ def get_client():
             _status["last_error"] = "GEMINI_API_KEY missing in .env"
             print("[ai.py] No GEMINI_API_KEY found - check your .env file (answers will be brochure-only).")
             return None
-        try:
-            from google import genai
-            try:
-                from google.genai import types
-                client = genai.Client(api_key=key, http_options=types.HttpOptions(timeout=REQUEST_TIMEOUT_MS))
-            except Exception:
-                client = genai.Client(api_key=key)
-            _client["obj"] = client
-        except Exception as e:
-            _status["last_error"] = f"{type(e).__name__}: {e}"
-            print(f"[ai.py] Could not start the Gemini client: {type(e).__name__}: {e}")
+        _client["obj"] = _RestClient(key)
         return _client["obj"]
 
 
@@ -166,31 +222,14 @@ def _chunk_text(chunk):
 
 def _stream_one(client, model, system_prompt, user_prompt):
     """Yields text pieces from ONE model. Raises if it fails before any text."""
-    from google.genai import types
-
     use_thinking_off = _think_off.get(model, "2.5" in model)   # only 2.5 models use thinking_budget; 3.x flash-lite already thinks minimally
     for attempt in (0, 1):
-        kwargs = dict(system_instruction=system_prompt, temperature=0.2, max_output_tokens=600)
-        if use_thinking_off:
-            try:
-                kwargs["thinking_config"] = types.ThinkingConfig(thinking_budget=0)
-            except Exception:
-                pass
-        config = types.GenerateContentConfig(**kwargs)
         got = False
         try:
-            if hasattr(client.models, "generate_content_stream"):
-                for chunk in client.models.generate_content_stream(model=model, contents=user_prompt, config=config):
-                    text = _chunk_text(chunk)
-                    if text:
-                        got = True
-                        yield text
-            else:
-                resp = client.models.generate_content(model=model, contents=user_prompt, config=config)
-                text = _chunk_text(resp)
-                if text:
-                    got = True
-                    yield text
+            for text in client.models.generate_content_stream(model=model, contents=user_prompt, system=system_prompt,
+                                                              max_tokens=600, thinking_off=use_thinking_off):
+                got = True
+                yield text
             return
         except Exception as e:
             if got:
