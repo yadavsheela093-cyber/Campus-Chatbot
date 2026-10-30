@@ -222,7 +222,7 @@ def gemini_test():
     out = {"key_set": bool(key), "key_chars": len(key)}
     t0 = time.time()
     try:
-        r = rq.post("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent",
+        r = rq.post("https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent",
                     headers={"x-goog-api-key": key, "Content-Type": "application/json"},
                     json={"contents": [{"parts": [{"text": "Reply with the single word: OK"}]}]}, timeout=10)
         out.update(http_status=r.status_code, reply=r.text[:400])
