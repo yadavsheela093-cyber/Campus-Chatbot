@@ -21,7 +21,7 @@ from urllib.parse import urlparse
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REGISTRY_PATH = os.environ.get("CAMPUS_PHOTOS_FILE", os.path.join(BASE_DIR, "campus_photos.json"))
-PAGE_SIZE = 12          # show the whole gallery in one go (no "photos 1-4 / show more" step)
+PAGE_SIZE = 4
 
 _PHOTO_WORDS = {"photo", "photos", "picture", "pictures", "pic", "pics", "image", "images",
                 "gallery", "galleries", "photograph", "photographs", "foto", "fotos", "tasveer", "tasveerein"}
@@ -156,10 +156,10 @@ def photo_reply(message, history=None, registry=None):
                         f"[{label} photos {len(items)}-{len(items)} of {len(items)}]",
                 "photos": [], "links": [OFFICIAL_PAGE]}
     end = offset + len(batch)
-    # captions are kept only as alt-text (accessibility); the page shows clean photos with no caption text
-    photos = [dict(p) for p in batch]
-    text = (f"Here are {label} photos.\n"
-            f"[{label} photos {offset + 1}-{end} of {len(items)}]")   # marker: hidden by the page, used for "show more"
+    photos = [{**p, "caption": f"Campus {p['campus']} - {p['caption']}"} for p in batch]
+    more_hint = "  Say \"show more\" for the next ones." if end < len(items) else ""
+    text = (f"Here are {label} photos from the official PCTE website.{more_hint}\n"
+            f"[{label} photos {offset + 1}-{end} of {len(items)}]")
     return {"text": text, "photos": photos, "links": []}
 
 
