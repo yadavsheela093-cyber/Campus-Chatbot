@@ -77,6 +77,30 @@ def valid_entries(registry):
     return out
 
 
+# ------------------------------------------------------- your own local photos
+# Drop image files into  static/campus_photos/campus1/  and  static/campus_photos/campus2/
+# No JSON editing needed. The folder name IS the campus, so Campus 1 / 2 never get mixed.
+LOCAL_DIR = os.path.join(BASE_DIR, "static", "campus_photos")
+_IMG_EXT = (".jpg", ".jpeg", ".png", ".webp", ".gif")
+
+
+def local_entries():
+    out = {"1": [], "2": []}
+    for campus in out:
+        folder = os.path.join(LOCAL_DIR, f"campus{campus}")
+        try:
+            names = sorted(os.listdir(folder))
+        except OSError:
+            continue
+        for n in names:
+            if not n.lower().endswith(_IMG_EXT):
+                continue
+            caption = re.sub(r"[_\-]+", " ", os.path.splitext(n)[0]).strip().title() or "Campus view"
+            out[campus].append({"url": f"/static/campus_photos/campus{campus}/{n}", "caption": caption,
+                                "source_page": OFFICIAL_PAGE["url"], "campus": campus})
+    return out
+
+
 # ------------------------------------------------------------ classification
 def _tokens(text):
     return re.findall(r"[a-z0-9]+", (text or "").lower())
@@ -135,8 +159,12 @@ def photo_reply(message, history=None, registry=None):
     req = classify(message, history)
     if not req:
         return None
+    use_local = registry is None
     registry = registry if registry is not None else load_registry()
     pool = valid_entries(registry)
+    if use_local:                      # add the photos you placed in static/campus_photos/
+        loc = local_entries()
+        pool = {"1": loc["1"] + pool["1"], "2": loc["2"] + pool["2"]}
     campus, offset = req["campus"], req["offset"]
 
     if campus == "all":
