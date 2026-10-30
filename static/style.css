@@ -435,3 +435,10 @@ ul { list-style: none; margin: 0; padding: 0; }
 .photo-card a,.media-links a{color:inherit;text-decoration:underline}
 .photo-missing{display:flex;align-items:center;justify-content:center;height:110px;font-size:12px;opacity:.7}
 .media-links{margin-top:8px;font-size:13px;display:flex;flex-wrap:wrap;gap:12px}
+
+/* clean photo cards (no caption) + action buttons */
+.photo-card a{display:block;text-decoration:none}
+.photo-card img{cursor:pointer;height:120px}
+.media-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.media-links a{display:inline-block;padding:7px 14px;border-radius:999px;background:var(--primary,#6C5CE7);color:#fff;font-size:13px;font-weight:600;text-decoration:none}
+.media-links a:nth-child(n+2){background:transparent;color:inherit;border:1px solid rgba(128,128,128,.5)}
