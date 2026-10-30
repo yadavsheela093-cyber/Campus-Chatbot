@@ -20,7 +20,7 @@ import time
 import threading
 from collections import OrderedDict, Counter
 
-from chatbot import ai, brochure, photos, links
+from chatbot import ai, brochure, photos
 from chatbot.database import search_structured_data, log_chat
 from chatbot.rag import source_of, topic_from_filename
 from chatbot.smalltalk import smalltalk_reply
@@ -208,8 +208,7 @@ def answer_events(message, history=None, engine=None):
         hit = cache_get(key)
         if hit:
             yield {"type": "meta", "mode": "cache", "sources": hit[2]}
-            yield {"type": "final", "text": hit[1], "mode": "cache", "ms": ms(), "sources": hit[2],
-                   "links": links.admission_links(message)}
+            yield {"type": "final", "text": hit[1], "mode": "cache", "ms": ms(), "sources": hit[2]}
             return
 
     # 2) exact database facts + 3) RAG/brochure passages -> small context
@@ -241,16 +240,14 @@ def answer_events(message, history=None, engine=None):
             cache_put(key, text, sources)
         _log(message, text)
         print(f"[speed] search {t_ctx}ms | first word {first_ms}ms | total {ms()}ms | {model}")
-        yield {"type": "final", "text": text, "mode": "ai", "model": model, "ms": ms(), "sources": sources,
-               "links": links.admission_links(message)}
+        yield {"type": "final", "text": text, "mode": "ai", "model": model, "ms": ms(), "sources": sources}
         return
 
     # 5) Gemini could not answer -> instant answer from the same data
     text = ai.clean_reply(ai.fallback_answer(query, structured, error, passages))
     _log(message, text)
     yield {"type": "final", "text": text, "mode": "fallback", "error": error,
-           "reason": ai.reason_label(error), "ms": ms(), "sources": sources,
-           "links": links.admission_links(message)}
+           "reason": ai.reason_label(error), "ms": ms(), "sources": sources}
 
 
 def _log(question, reply):
