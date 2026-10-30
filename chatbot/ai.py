@@ -16,6 +16,7 @@ SPEED + RELIABILITY design (why answers are now fast):
 import os
 import re
 import time
+import queue
 import threading
 
 from chatbot.database import load_config
@@ -29,7 +30,10 @@ MODEL_CANDIDATES = _env_models or [
     "gemini-flash-latest",
 ]
 MAX_ATTEMPTS = 2            # models tried per question
-REQUEST_TIMEOUT_MS = 25000
+REQUEST_TIMEOUT_MS = 15000
+FIRST_TOKEN_TIMEOUT = float(os.environ.get("FIRST_TOKEN_TIMEOUT", "6"))   # no first word in this many seconds -> next model
+STREAM_IDLE_TIMEOUT = 10    # a stream that goes silent this long mid-answer is cut and kept as is
+_think_off = {}             # model -> False once it rejected thinking_budget=0 (remembered, so no retry cost later)
 
 _client = {"obj": None, "ready": False}
 _client_lock = threading.Lock()
@@ -164,9 +168,9 @@ def _stream_one(client, model, system_prompt, user_prompt):
     """Yields text pieces from ONE model. Raises if it fails before any text."""
     from google.genai import types
 
-    use_thinking_off = "2.5" in model
+    use_thinking_off = _think_off.get(model, True)
     for attempt in (0, 1):
-        kwargs = dict(system_instruction=system_prompt, temperature=0.2, max_output_tokens=900)
+        kwargs = dict(system_instruction=system_prompt, temperature=0.2, max_output_tokens=600)
         if use_thinking_off:
             try:
                 kwargs["thinking_config"] = types.ThinkingConfig(thinking_budget=0)
@@ -191,10 +195,49 @@ def _stream_one(client, model, system_prompt, user_prompt):
         except Exception as e:
             if got:
                 raise
-            if attempt == 0 and use_thinking_off and "thinking" in str(e).lower():
+            low = str(e).lower()
+            if attempt == 0 and use_thinking_off and ("thinking" in low or "budget" in low):
                 use_thinking_off = False        # this model rejects the thinking setting: retry without it
+                _think_off[model] = False
                 continue
             raise
+
+
+def _pump(gen, q, stop):
+    """Runs a model stream in its own thread and feeds a queue, so the caller can give up
+    on a model that is stuck (overloaded / hanging) instead of waiting for the full HTTP timeout."""
+    try:
+        for piece in gen:
+            if stop.is_set():
+                return
+            q.put(("delta", piece))
+        q.put(("end", None))
+    except Exception as e:
+        q.put(("err", e))
+
+
+def _stream_guarded(client, model, system_prompt, user_prompt):
+    """Like _stream_one, but raises TimeoutError if the first word does not arrive in time."""
+    q, stop = queue.Queue(), threading.Event()
+    threading.Thread(target=_pump, args=(_stream_one(client, model, system_prompt, user_prompt), q, stop),
+                     daemon=True).start()
+    got = False
+    try:
+        while True:
+            try:
+                kind, val = q.get(timeout=STREAM_IDLE_TIMEOUT if got else FIRST_TOKEN_TIMEOUT)
+            except queue.Empty:
+                raise TimeoutError(f"no {'more text' if got else 'first word'} from {model} "
+                                   f"in {STREAM_IDLE_TIMEOUT if got else FIRST_TOKEN_TIMEOUT:g}s")
+            if kind == "delta":
+                got = True
+                yield val
+            elif kind == "err":
+                raise val
+            else:
+                return
+    finally:
+        stop.set()
 
 
 def stream_answer(question, context_text, history_text=""):
@@ -220,7 +263,7 @@ def stream_answer(question, context_text, history_text=""):
         attempts += 1
         got = False
         try:
-            for piece in _stream_one(client, model, system_prompt, user_prompt):
+            for piece in _stream_guarded(client, model, system_prompt, user_prompt):
                 got = True
                 yield ("delta", piece)
             if got:
