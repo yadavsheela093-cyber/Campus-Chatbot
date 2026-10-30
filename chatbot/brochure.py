@@ -14,7 +14,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 FULL_PATH = os.path.join(BASE_DIR, "content", "brochure_full.txt")
 
-_cache = {"full": None, "sections": None}
+_cache = {"full": None, "sections": None, "rank": None}
 
 _STOP = {
     "the", "and", "for", "what", "tell", "about", "please", "are", "you", "with", "this",
@@ -132,13 +132,16 @@ def _ranked(query, with_names=False, min_cover=0.5):
     q = set(_tokens(query))
     if not secs or not q:
         return []
-    sec_tokens = [Counter(_tokens(t)) for _, _, t in secs]
-    df = Counter()
-    for t in sec_tokens:
-        df.update(set(t))
+    if _cache.get("rank") is None:              # built once, not on every question
+        toks = [Counter(_tokens(t)) for _, _, t in secs]
+        dfc = Counter()
+        for t in toks:
+            dfc.update(set(t))
+        _cache["rank"] = (toks, dfc, [set(t) for t in toks])
+    sec_tokens, df, sec_sets = _cache["rank"]
     n = len(secs)
     scored = []
-    for (name, name_tokens, text), tf in zip(secs, sec_tokens):
+    for idx, ((name, name_tokens, text), tf) in enumerate(zip(secs, sec_tokens)):
         score = 0.0
         for w in q:
             idf = math.log((n + 1) / (df.get(w, 0) + 1)) + 1
@@ -151,11 +154,11 @@ def _ranked(query, with_names=False, min_cover=0.5):
         if "awards" in name and not (q & _RANK_WORDS):
             score *= 0.25                       # rankings page only when asked about rankings
         if score > 0:
-            scored.append((score, text, name))
+            scored.append((score, text, name, idx))
     scored.sort(key=lambda x: -x[0])
     out = []
-    for score, text, name in scored[:6]:
-        if sum(1 for w in q if w in _stem_text(text)) >= min_cover * len(q):
+    for score, text, name, idx in scored[:6]:
+        if sum(1 for w in q if w in sec_sets[idx]) >= min_cover * len(q):
             out.append((name, text) if with_names else text)
     return out
 
