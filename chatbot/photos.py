@@ -21,7 +21,7 @@ from urllib.parse import urlparse
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REGISTRY_PATH = os.environ.get("CAMPUS_PHOTOS_FILE", os.path.join(BASE_DIR, "campus_photos.json"))
-PAGE_SIZE = 4
+PAGE_SIZE = 12          # show the whole gallery in one go (no "photos 1-4 / show more" step)
 
 _PHOTO_WORDS = {"photo", "photos", "picture", "pictures", "pic", "pics", "image", "images",
                 "gallery", "galleries", "photograph", "photographs", "foto", "fotos", "tasveer", "tasveerein"}
@@ -74,30 +74,6 @@ def valid_entries(registry):
             continue
         seen.add(url)
         out[campus].append({"url": url, "caption": e["caption"].strip(), "source_page": source, "campus": campus})
-    return out
-
-
-# ------------------------------------------------------- your own local photos
-# Drop image files into  static/campus_photos/campus1/  and  static/campus_photos/campus2/
-# No JSON editing needed. The folder name IS the campus, so Campus 1 / 2 never get mixed.
-LOCAL_DIR = os.path.join(BASE_DIR, "static", "campus_photos")
-_IMG_EXT = (".jpg", ".jpeg", ".png", ".webp", ".gif")
-
-
-def local_entries():
-    out = {"1": [], "2": []}
-    for campus in out:
-        folder = os.path.join(LOCAL_DIR, f"campus{campus}")
-        try:
-            names = sorted(os.listdir(folder))
-        except OSError:
-            continue
-        for n in names:
-            if not n.lower().endswith(_IMG_EXT):
-                continue
-            caption = re.sub(r"[_\-]+", " ", os.path.splitext(n)[0]).strip().title() or "Campus view"
-            out[campus].append({"url": f"/static/campus_photos/campus{campus}/{n}", "caption": caption,
-                                "source_page": OFFICIAL_PAGE["url"], "campus": campus})
     return out
 
 
@@ -159,12 +135,8 @@ def photo_reply(message, history=None, registry=None):
     req = classify(message, history)
     if not req:
         return None
-    use_local = registry is None
     registry = registry if registry is not None else load_registry()
     pool = valid_entries(registry)
-    if use_local:                      # add the photos you placed in static/campus_photos/
-        loc = local_entries()
-        pool = {"1": loc["1"] + pool["1"], "2": loc["2"] + pool["2"]}
     campus, offset = req["campus"], req["offset"]
 
     if campus == "all":
@@ -184,10 +156,10 @@ def photo_reply(message, history=None, registry=None):
                         f"[{label} photos {len(items)}-{len(items)} of {len(items)}]",
                 "photos": [], "links": [OFFICIAL_PAGE]}
     end = offset + len(batch)
-    photos = [{**p, "caption": f"Campus {p['campus']} - {p['caption']}"} for p in batch]
-    more_hint = "  Say \"show more\" for the next ones." if end < len(items) else ""
-    text = (f"Here are {label} photos from the official PCTE website.{more_hint}\n"
-            f"[{label} photos {offset + 1}-{end} of {len(items)}]")
+    # captions are kept only as alt-text (accessibility); the page shows clean photos with no caption text
+    photos = [dict(p) for p in batch]
+    text = (f"Here are {label} photos.\n"
+            f"[{label} photos {offset + 1}-{end} of {len(items)}]")   # marker: hidden by the page, used for "show more"
     return {"text": text, "photos": photos, "links": []}
 
 
