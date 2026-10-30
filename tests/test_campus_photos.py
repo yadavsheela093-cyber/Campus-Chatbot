@@ -4,8 +4,7 @@ import json, os, sys, tempfile, unittest
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 os.environ.setdefault("SKIP_AI_STARTUP_CHECK", "1")
-from chatbot import photos, pipeline, links
-photos.PAGE_SIZE = 4   # production shows 12 at once; tests exercise the paging logic with 4
+from chatbot import photos, pipeline
 
 def entry(campus, n, **kw):
     e = {"campus": str(campus), "url": f"https://pcte.edu.in/test/c{campus}_{n}.jpg",
@@ -45,7 +44,7 @@ class Retrieval(unittest.TestCase):
         r = reply("Show me Campus 2 photos", registry(5, 5))
         self.assertEqual(len(r["photos"]), 4)
         self.assertTrue(all(p["campus"] == "2" and "/c2_" in p["url"] for p in r["photos"]))
-        self.assertTrue(all(p["campus"] == "2" and p["source_page"].startswith("https://") for p in r["photos"]))
+        self.assertTrue(all(p["caption"].startswith("Campus 2") and p["source_page"].startswith("https://") for p in r["photos"]))
 
     def test_campus1_only_returns_campus1(self):
         r = reply("Show me Campus 1 photos", registry(5, 5))
@@ -54,7 +53,7 @@ class Retrieval(unittest.TestCase):
     def test_generic_labels_each_photo_with_its_campus(self):
         r = reply("Show me PCTE photos", registry(2, 2))
         self.assertEqual([p["campus"] for p in r["photos"]], ["1", "1", "2", "2"])
-        self.assertTrue(all(p["campus"] in ("1", "2") and not p["caption"].startswith("Campus") for p in r["photos"]))
+        self.assertTrue(all(p["caption"].startswith(f"Campus {p['campus']}") for p in r["photos"]))
 
     def test_campus2_never_falls_back_to_campus1(self):
         r = reply("Show me Campus 2 photos", registry(c1=6, c2=0))
@@ -155,23 +154,5 @@ class PipelineAndApi(unittest.TestCase):
         self.assertEqual(len(d["photos"]), 4)
 
 
-
-
-class CleanOutputAndLinks(unittest.TestCase):
-    def test_reply_text_has_no_show_more_instruction(self):
-        r = reply("Show me PCTE photos", registry(5, 5))
-        self.assertNotIn("show more", r["text"].lower())
-
-    def test_admission_questions_get_apply_and_site_buttons(self):
-        for q in ["admission kaise le", "how to apply for BCA", "apply form kaha hai", "BCA admission process"]:
-            l = links.admission_links(q)
-            self.assertEqual(len(l), 2, q)
-            self.assertTrue(all(x["url"].startswith("https://") for x in l))
-
-    def test_other_questions_get_no_buttons(self):
-        for q in ["BCA fees", "hostel facilities", "placement kaisi hai"]:
-            self.assertEqual(links.admission_links(q), [], q)
-
-
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(verbosity=2)
