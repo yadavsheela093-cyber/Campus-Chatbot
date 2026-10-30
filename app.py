@@ -203,8 +203,35 @@ def debug():
 
 @app.route("/api/ai-status")
 def ai_status():
-    """Open http://127.0.0.1:5000/api/ai-status to see if Gemini is working (and why not)."""
-    return jsonify(ai.diagnose())
+    """Open /api/ai-status to see if Gemini is working (and why not). Never hangs: gives up after 20 s."""
+    box = {}
+    t = threading.Thread(target=lambda: box.update(ai.diagnose()), daemon=True)
+    t.start()
+    t.join(20)
+    if t.is_alive():
+        return jsonify({"working": False, "problems": [
+            "Gemini did not answer within 20 seconds (stuck or very slow). Open /api/gemini-test to see the raw reason."]})
+    return jsonify(box)
+
+
+@app.route("/api/gemini-test")
+def gemini_test():
+    """Quick raw test of the Gemini key (plain HTTPS call, 10 s limit). Shows the real error. Never shows the key."""
+    import requests as rq
+    key = os.environ.get("GEMINI_API_KEY", "").strip()
+    out = {"key_set": bool(key), "key_chars": len(key)}
+    t0 = time.time()
+    try:
+        r = rq.post("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent",
+                    headers={"x-goog-api-key": key, "Content-Type": "application/json"},
+                    json={"contents": [{"parts": [{"text": "Reply with the single word: OK"}]}]}, timeout=10)
+        out.update(http_status=r.status_code, reply=r.text[:400])
+    except Exception as e:
+        out.update(error=f"{type(e).__name__}: {str(e)[:250]}")
+    out["seconds"] = round(time.time() - t0, 2)
+    if key:
+        out = json.loads(json.dumps(out).replace(key, "***"))
+    return jsonify(out)
 
 
 @app.route("/api/site-status")
