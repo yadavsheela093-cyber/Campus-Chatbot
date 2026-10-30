@@ -24,10 +24,10 @@ from chatbot import brochure
 
 _env_models = [m.strip() for m in os.environ.get("GEMINI_MODELS", "").split(",") if m.strip()]
 MODEL_CANDIDATES = _env_models or [
-    "gemini-2.5-flash-lite",
-    "gemini-2.5-flash",
+    "gemini-3.5-flash-lite",    # Google retired gemini-2.5-* for new API keys (404) - use the 3.x models
+    "gemini-3.1-flash-lite",
+    "gemini-3.5-flash",
     "gemini-flash-lite-latest",
-    "gemini-flash-latest",
 ]
 MAX_ATTEMPTS = 2            # models tried per question
 REQUEST_TIMEOUT_MS = 15000
@@ -168,7 +168,7 @@ def _stream_one(client, model, system_prompt, user_prompt):
     """Yields text pieces from ONE model. Raises if it fails before any text."""
     from google.genai import types
 
-    use_thinking_off = _think_off.get(model, True)
+    use_thinking_off = _think_off.get(model, "2.5" in model)   # only 2.5 models use thinking_budget; 3.x flash-lite already thinks minimally
     for attempt in (0, 1):
         kwargs = dict(system_instruction=system_prompt, temperature=0.2, max_output_tokens=600)
         if use_thinking_off:
