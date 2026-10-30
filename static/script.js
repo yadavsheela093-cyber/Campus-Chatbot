@@ -99,10 +99,9 @@
 
   // ------------------------------------------------------------ photos (campus galleries)
   function httpsUrl(u) { try { return new URL(u).protocol === "https:"; } catch (e) { return false; } }
-  function photoUrl(u) { return typeof u === "string" && (/^\/static\/campus_photos\/[\w.\-]+\/[\w.\- ()%]+$/.test(u) || httpsUrl(u)); }
   function safePhotos(list) {
     return (Array.isArray(list) ? list : [])
-      .filter((p) => p && photoUrl(p.url) && httpsUrl(p.source_page) && typeof p.caption === "string")
+      .filter((p) => p && httpsUrl(p.url) && httpsUrl(p.source_page) && typeof p.caption === "string")
       .map((p) => ({ url: p.url, caption: p.caption.slice(0, 200), source_page: p.source_page, campus: String(p.campus || "") }));
   }
   function safeLinks(list) {
@@ -133,9 +132,10 @@
           miss.textContent = "Image could not be loaded.";
           fig.insertBefore(miss, fig.firstChild);
         });
-        const cap = document.createElement("figcaption");
-        cap.append(document.createTextNode(p.caption + " \u00b7 "), openLink(p.source_page, "Source"));
-        fig.append(img, cap);
+        const a = document.createElement("a");          // clean photo only - tap to open the official page
+        a.href = p.source_page; a.target = "_blank"; a.rel = "noopener noreferrer";
+        a.appendChild(img);
+        fig.appendChild(a);
         grid.appendChild(fig);
       }
       col.appendChild(grid);
@@ -251,6 +251,11 @@
       .trim();
   }
 
+  function hidePhotoMarker(text) {    // "[PCTE photos 1-4 of 5]" is only a hidden bookmark for "show more"
+    return String(text || "").replace(/\n*\s*\[(?:campus\s*\d|pcte)\s+photos[^\]]*\]/gi, "")
+      .replace(/\s*say\s+"?show more"?[^.\n]*\.?/gi, "").trim();
+  }
+
   function softClean(text) {          // while streaming: hide markdown symbols so it always looks clean
     return stripNotices(text).replace(/\*\*/g, "").replace(/__/g, "").replace(/`/g, "")
       .replace(/^#{1,6}\s*/gm, "").replace(/^[*-]\s+/gm, "• ");
@@ -273,7 +278,7 @@
         if (live && live.msg === m) { live.bubble = r.bubble; live.col = r.col; }
         if (m.text) r.bubble.textContent = softClean(m.text); else typingDots(r.bubble);
       } else {
-        r.bubble.textContent = stripNotices(m.text);
+        r.bubble.textContent = hidePhotoMarker(stripNotices(m.text));
         renderMedia(r.col, m);
         if (m.err) r.bubble.classList.add("err");
       }
