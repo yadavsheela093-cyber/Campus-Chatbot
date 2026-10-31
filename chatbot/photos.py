@@ -155,7 +155,7 @@ def photo_reply(message, history=None, registry=None):
     campus, offset = req["campus"], req["offset"]
 
     if campus == "all":
-        items = pool["1"] + pool["2"]          # each item keeps its own campus label
+        items = pool["1"] + pool["2"]          # each item keeps its own campus tag
         label = "PCTE"
     else:
         items = pool[campus]
@@ -171,7 +171,7 @@ def photo_reply(message, history=None, registry=None):
                         f"[{label} photos {len(items)}-{len(items)} of {len(items)}]",
                 "photos": [], "links": [OFFICIAL_PAGE]}
     end = offset + len(batch)
-    photos = [{**p, "caption": f"Campus {p['campus']} - {p['caption']}"} for p in batch]
+    photos = [dict(p) for p in batch]          # caption exactly as written in campus_photos.json
     more_hint = "  Say \"show more\" for the next ones." if end < len(items) else ""
     text = (f"Here are {label} photos.{more_hint}\n"
             f"[{label} photos {offset + 1}-{end} of {len(items)}]")
