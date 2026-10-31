@@ -253,6 +253,10 @@
       .trim();
   }
 
+  function hideMarker(text) {         // photo-paging marker "[PCTE photos 1-4 of 5]" stays in the saved text (for "show more") but is never shown
+    return String(text || "").replace(/^\s*\[(?:Campus\s+\d|PCTE)\s+photos\s+\d+\s*[-\u2013]\s*\d+\s+of\s+\d+\]\s*$/gim, "").trim();
+  }
+
   function softClean(text) {          // while streaming: hide markdown symbols so it always looks clean
     return stripNotices(text).replace(/\*\*/g, "").replace(/__/g, "").replace(/`/g, "")
       .replace(/^#{1,6}\s*/gm, "").replace(/^[*-]\s+/gm, "• ");
@@ -275,7 +279,7 @@
         if (live && live.msg === m) { live.bubble = r.bubble; live.col = r.col; }
         if (m.text) r.bubble.textContent = softClean(m.text); else typingDots(r.bubble);
       } else {
-        r.bubble.textContent = stripNotices(m.text);
+        r.bubble.textContent = hideMarker(stripNotices(m.text));
         renderMedia(r.col, m);
         if (m.err) r.bubble.classList.add("err");
       }
@@ -517,7 +521,7 @@
   function snippetFor(c, term) {
     if (!term) {
       const last = [...c.messages].reverse().find((m) => !m.pending && m.text);
-      return last ? last.text.replace(/\s+/g, " ").slice(0, 110) : "";
+      return last ? hideMarker(last.text).replace(/\s+/g, " ").slice(0, 110) : "";
     }
     const t = term.toLowerCase();
     const m = c.messages.find((x) => x.text.toLowerCase().includes(t));
