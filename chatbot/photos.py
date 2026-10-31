@@ -172,8 +172,7 @@ def photo_reply(message, history=None, registry=None):
                 "photos": [], "links": [OFFICIAL_PAGE]}
     end = offset + len(batch)
     photos = [dict(p) for p in batch]          # caption exactly as written in campus_photos.json
-    more_hint = "  Say \"show more\" for the next ones." if end < len(items) else ""
-    text = (f"Here are {label} photos.{more_hint}\n"
+    text = (f"Here are {label} photos.\n"
             f"[{label} photos {offset + 1}-{end} of {len(items)}]")
     return {"text": text, "photos": photos, "links": []}
 
