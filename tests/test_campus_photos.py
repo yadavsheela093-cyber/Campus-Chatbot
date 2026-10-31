@@ -154,5 +154,22 @@ class PipelineAndApi(unittest.TestCase):
         self.assertEqual(len(d["photos"]), 4)
 
 
+class OwnPhotos(unittest.TestCase):
+    def test_shipped_own_photos_load_and_are_campus_separated(self):
+        pool = photos.valid_entries(photos.load_registry())
+        self.assertEqual((len(pool["1"]), len(pool["2"])), (1, 4))
+        self.assertTrue(all(p["url"].startswith("/static/campus_photos/campus2/") for p in pool["2"]))
+
+    def test_missing_or_tricky_local_file_rejected(self):
+        bad = [{"campus": "1", "url": "/static/campus_photos/nope.jpg", "caption": "x", "evidence": "y", "verified": True},
+               {"campus": "1", "url": "/static/campus_photos/../app.py", "caption": "x", "evidence": "y", "verified": True}]
+        self.assertEqual(photos.valid_entries({"allowed_hosts": [], "photos": bad})["1"], [])
+
+    def test_campus2_request_returns_four_own_photos(self):
+        r = photos.photo_reply("show me campus 2 photos", None)
+        self.assertEqual(len(r["photos"]), 4)
+        self.assertTrue(all(p["campus"] == "2" for p in r["photos"]))
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
