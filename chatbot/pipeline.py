@@ -20,7 +20,7 @@ import time
 import threading
 from collections import OrderedDict, Counter
 
-from chatbot import ai, brochure, photos
+from chatbot import ai, brochure, photos, admission_faq
 from chatbot.database import search_structured_data, log_chat
 from chatbot.rag import source_of, topic_from_filename
 from chatbot.smalltalk import smalltalk_reply
@@ -40,6 +40,22 @@ _FOLLOWUP_WORDS = {"it", "its", "this", "that", "they", "their", "there", "same"
 
 
 # ------------------------------------------------------------------- helpers
+NO_ANSWER_REPLY = ("I'm sorry.\n"
+                   "Here is the contact of PCTE:\n"
+                   "Phone: +91-161-2888500\n"
+                   "Email: admissions@pcte.edu.in")
+_NO_ANSWER_RE = re.compile(r"couldn.?t find reliable information|don.?t want to give you a wrong answer", re.I)
+
+
+def is_no_answer(text):
+    return bool(_NO_ANSWER_RE.search(text or ""))
+
+
+def polish(text):
+    """The long 'I'm sorry, I couldn't find reliable information...' message is replaced by a short one with the contact."""
+    return NO_ANSWER_REPLY if is_no_answer(text) else text
+
+
 def normalize_q(text):
     return re.sub(r"\s+", " ", re.sub(r"[^a-z0-9\s]", " ", (text or "").lower())).strip()
 
@@ -201,6 +217,14 @@ def answer_events(message, history=None, engine=None):
         _log(message, photo["text"])
         return
 
+    # 0c) admission requirements - instant answer (spelling mistakes allowed), no AI
+    adm = admission_faq.admission_reply(message)
+    if adm:
+        yield {"type": "meta", "mode": "instant", "sources": []}
+        yield {"type": "final", "text": adm, "mode": "instant", "ms": ms(), "sources": []}
+        _log(message, adm)
+        return
+
     # 1) cache (only for stand-alone questions, not follow-ups)
     standalone = not (turns and _is_followup(message))
     key = normalize_q(message)
@@ -223,19 +247,33 @@ def answer_events(message, history=None, engine=None):
     # 4) Gemini, streamed
     raw, model, error = "", None, None
     t_ctx, first_ms = ms(), None
+    held, state = [], "hold"      # first words are held back briefly so the long "I'm sorry..." text is never shown
     for kind, payload in ai.stream_answer(message, context, history_text):
         if kind == "delta":
             if first_ms is None:
                 first_ms = ms()
             raw += payload
-            yield {"type": "delta", "text": payload}
+            if state == "hold":
+                held.append(payload)
+                if is_no_answer(raw):
+                    state, held = "suppress", []
+                elif len(raw) >= 70:
+                    state = "flow"
+                    for h in held:
+                        yield {"type": "delta", "text": h}
+                    held = []
+            elif state == "flow":
+                yield {"type": "delta", "text": payload}
         elif kind == "done":
             model = payload.get("model")
         elif kind == "error":
             error = payload
+    if state == "hold" and held and not is_no_answer(raw):      # very short answer
+        for h in held:
+            yield {"type": "delta", "text": h}
 
     if raw.strip():
-        text = ai.clean_reply(raw)
+        text = polish(ai.clean_reply(raw))
         if standalone:
             cache_put(key, text, sources)
         _log(message, text)
@@ -244,7 +282,7 @@ def answer_events(message, history=None, engine=None):
         return
 
     # 5) Gemini could not answer -> instant answer from the same data
-    text = ai.clean_reply(ai.fallback_answer(query, structured, error, passages))
+    text = polish(ai.clean_reply(ai.fallback_answer(query, structured, error, passages)))
     _log(message, text)
     yield {"type": "final", "text": text, "mode": "fallback", "error": error,
            "reason": ai.reason_label(error), "ms": ms(), "sources": sources}
