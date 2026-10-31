@@ -44,16 +44,16 @@ class Retrieval(unittest.TestCase):
         r = reply("Show me Campus 2 photos", registry(5, 5))
         self.assertEqual(len(r["photos"]), 4)
         self.assertTrue(all(p["campus"] == "2" and "/c2_" in p["url"] for p in r["photos"]))
-        self.assertTrue(all(p["caption"].startswith("Campus 2") and p["source_page"].startswith("https://") for p in r["photos"]))
+        self.assertTrue(all(p["caption"].startswith("Test view") and p["source_page"].startswith("https://") for p in r["photos"]))
 
     def test_campus1_only_returns_campus1(self):
         r = reply("Show me Campus 1 photos", registry(5, 5))
         self.assertTrue(r["photos"] and all(p["campus"] == "1" for p in r["photos"]))
 
-    def test_generic_labels_each_photo_with_its_campus(self):
+    def test_generic_request_keeps_campus_tag_without_caption_prefix(self):
         r = reply("Show me PCTE photos", registry(2, 2))
         self.assertEqual([p["campus"] for p in r["photos"]], ["1", "1", "2", "2"])
-        self.assertTrue(all(p["caption"].startswith(f"Campus {p['campus']}") for p in r["photos"]))
+        self.assertTrue(all(not p["caption"].startswith("Campus") for p in r["photos"]))
 
     def test_campus2_never_falls_back_to_campus1(self):
         r = reply("Show me Campus 2 photos", registry(c1=6, c2=0))
