@@ -4,7 +4,8 @@ photos.py - campus-specific photo answers ("Show me Campus 2 photos").
 Design rules (important):
   * Photos come ONLY from campus_photos.json. No URL is ever generated or guessed.
   * An entry is shown only if it is explicitly tagged with ONE campus (1 or 2),
-    has an https URL on an allowed official host, a caption, a clickable source
+    has an https URL on an allowed official host (or is an own photo stored under
+    static/campus_photos/), a caption, a clickable source
     page, and a non-empty "evidence" note saying HOW the campus was established
     (e.g. the official page's own caption). Filename / domain alone is never evidence.
   * Campus 1 and Campus 2 are never mixed up. If a campus has no verified photos,
@@ -22,6 +23,7 @@ from urllib.parse import urlparse
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REGISTRY_PATH = os.environ.get("CAMPUS_PHOTOS_FILE", os.path.join(BASE_DIR, "campus_photos.json"))
 PAGE_SIZE = 4
+LOCAL_PREFIX = "/static/campus_photos/"      # photos stored in the project's own static folder
 
 _PHOTO_WORDS = {"photo", "photos", "picture", "pictures", "pic", "pics", "image", "images",
                 "gallery", "galleries", "photograph", "photographs", "foto", "fotos", "tasveer", "tasveerein"}
@@ -56,8 +58,19 @@ def _host_ok(url, allowed):
     return p.scheme == "https" and any(host == a or host.endswith("." + a) for a in allowed)
 
 
+def _local_ok(url):
+    """Own photo inside static/campus_photos/ - must exist on disk, no path tricks."""
+    if not isinstance(url, str) or not url.startswith(LOCAL_PREFIX) or ".." in url or "\\" in url:
+        return False
+    return os.path.isfile(os.path.join(BASE_DIR, url.lstrip("/").replace("/", os.sep)))
+
+
 def valid_entries(registry):
-    """Entries that pass every verification rule, grouped by campus: {"1": [...], "2": [...]}."""
+    """Entries that pass every verification rule, grouped by campus: {"1": [...], "2": [...]}.
+    Two kinds are accepted:
+      * official web photo  - https URL + https source page, both on an allowed host
+      * own photo           - file under static/campus_photos/ that really exists
+    Both need a campus tag (1 or 2), a caption and an evidence note."""
     allowed = [h.lower() for h in registry.get("allowed_hosts", [])]
     out = {"1": [], "2": []}
     seen = set()
@@ -70,7 +83,9 @@ def valid_entries(registry):
             continue
         if not (str(e.get("caption", "")).strip() and str(e.get("evidence", "")).strip()):
             continue
-        if not (_host_ok(url, allowed) and _host_ok(source, allowed)):
+        if _local_ok(url):
+            source = ""                              # own photo: no external source page
+        elif not (_host_ok(url, allowed) and _host_ok(source, allowed)):
             continue
         seen.add(url)
         out[campus].append({"url": url, "caption": e["caption"].strip(), "source_page": source, "campus": campus})
@@ -158,7 +173,7 @@ def photo_reply(message, history=None, registry=None):
     end = offset + len(batch)
     photos = [{**p, "caption": f"Campus {p['campus']} - {p['caption']}"} for p in batch]
     more_hint = "  Say \"show more\" for the next ones." if end < len(items) else ""
-    text = (f"Here are {label} photos from the official PCTE website.{more_hint}\n"
+    text = (f"Here are {label} photos.{more_hint}\n"
             f"[{label} photos {offset + 1}-{end} of {len(items)}]")
     return {"text": text, "photos": photos, "links": []}
 
